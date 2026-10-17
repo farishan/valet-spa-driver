@@ -1,0 +1,17 @@
+# Editor / OS noise
+.DS_Store
+*.swp
+*~
+.idea/
+.vscode/
+
+# Never commit a Valet installation, a build output, or anything with keys in it.
+# The driver is a single source file; if you find yourself committing a .crt or
+# .key here, something has gone wrong.
+/.valet/
+dist/
+*.crt
+*.key
+*.csr
+*.pem
+*.p12

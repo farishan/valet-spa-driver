@@ -1,0 +1,30 @@
+name: test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
+      # The suite needs Valet's bundled driver classes but not a working Valet
+      # install -- no nginx, no root, no service management. The base classes
+      # are self-contained, so a plain checkout is enough.
+      - name: Fetch Valet Linux
+        run: git clone --depth 1 https://github.com/cpriego/valet-linux.git /tmp/valet-linux
+
+      - name: Run test suite
+        env:
+          VALET_PATH: /tmp/valet-linux
+        run: php tests/run.php
+
+      - name: Lint the driver
+        run: php -l src/SpaValetDriver.php
